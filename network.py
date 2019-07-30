@@ -28,9 +28,9 @@ def CreateConstraintMask():
         box_col = 3 * (col // 3)
 
         for j in range(9):
-            row = 9 * (j // 3)
-            col = j % 3
-            constraint_mask[i, 2, box_row + row + box_col + col] = 1
+            new_row = j // 3
+            new_col = j % 3
+            constraint_mask[i, 2, box_row + 9 * new_row + box_col + new_col] = 1
 
     return constraint_mask
 

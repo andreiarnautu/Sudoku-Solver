@@ -2,19 +2,17 @@ import torch
 import torch.utils.data as data
 import pandas
 
-def GetTensors(sample, train_split = 0.8):
+def GetTensors(sample, train_split = 0.05):
     size = sample.shape[0]  #  10000
 
-    def one_hot_encode(s):
-        result = torch.zeros((1, 81, 9), dtype = torch.float)
+    def to_int(s):
+        result = torch.zeros((1, 81), dtype = torch.float)
         for i in range(81):
-            if int(s[i]) > 0:
-                result[0, i, int(s[i]) - 1] = 1
+            result[0, i] = int(s[i])
         return result
 
-
-    quizzes = sample.quizzes.apply(one_hot_encode)
-    solutions = sample.solutions.apply(one_hot_encode)
+    quizzes = sample.quizzes.apply(to_int)
+    solutions = sample.solutions.apply(to_int)
     quizzes = torch.cat(quizzes.values.tolist())
     solutions = torch.cat(solutions.values.tolist())
 
